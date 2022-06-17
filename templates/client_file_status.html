@@ -1,0 +1,35 @@
+<!doctype html>
+<h1>File List</h1>
+<div id="file_list"></div>
+<script>
+    //Check the current progress by calling API /fetch_file. Generate a list showing the progress
+    let checkFileList = setInterval(function startEngine() {
+        //Make the request
+        let xmlHttp = new XMLHttpRequest();
+        xmlHttp.open( "GET", "/fetch_file", false)
+        xmlHttp.send( null );
+
+        //Parse the data and generate html
+        let data = JSON.parse(xmlHttp.responseText);
+        let engine_fileList = data['engine']['data'];
+        let client_fileList = data['client']
+        let htmlString = '<table><thead><tr><th>Engine Side</th><th>Client Side</th></tr></thead>';
+        for(let file of engine_fileList){
+            let checkMark = ""
+            if(client_fileList.includes(file)){
+                checkMark = '&#10004'
+            }
+            htmlString = htmlString + '<tr><td>'+ file +'</td><td style="color:green">'+ checkMark +'</td></tr>'
+        }
+        htmlString = htmlString + '</table>'
+        document.getElementById('file_list').innerHTML = htmlString;
+
+        //keep the view on the latest data
+        window.scrollTo(0, document.body.scrollHeight);
+
+        //When 100 file downloaded , stop calling the API
+        if(client_fileList.length >= 100){
+            clearInterval(checkFileList)
+        }
+    },1000)
+</script>

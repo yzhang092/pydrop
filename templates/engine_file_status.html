@@ -1,0 +1,30 @@
+<!doctype html>
+<h1>Engine File List</h1>
+<div id="file_list"></div>
+<script>
+    //Check the current progress by calling API /check. Generate a list showing the progress
+    let checkFileList = setInterval(function startEngine() {
+        //Make the request
+        let xmlHttp = new XMLHttpRequest();
+        xmlHttp.open( "GET", "/check", false)
+        xmlHttp.send( null );
+        let data = JSON.parse(xmlHttp.responseText);
+
+        //Parse the data and generate html
+        let fileList = data['data'];
+        let htmlString = '<ul>';
+        for(let file of fileList){
+            htmlString = htmlString + '<li>'+ file+'</li>'
+        }
+        htmlString = htmlString + '</ul>'
+        document.getElementById('file_list').innerHTML = htmlString;
+
+        //keep the view on the latest data
+        window.scrollTo(0, document.body.scrollHeight);
+
+        //When 100 file done, stop calling the API
+        if(fileList.length >= 100){
+            clearInterval(checkFileList)
+        }
+    },1000)
+</script>

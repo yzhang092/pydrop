@@ -1,0 +1,13 @@
+<!doctype html>
+<form action="/status" method="get" onsubmit="startEngine()">
+    <input type="submit" value="Start File Engine">
+</form>
+<script>
+    //Call the API to start generate 100 files, and the result will be shown in the next page
+    function startEngine() {
+        let xmlHttp = new XMLHttpRequest();
+        xmlHttp.open( "GET", "/start", true )
+        xmlHttp.send( null );
+        return xmlHttp.responseText;
+    }
+</script>
