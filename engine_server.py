@@ -37,10 +37,10 @@ def engine_check():
 # API that response the file.
 # TODO: This is the file server so load balancer and other methods should be used to handle multiple request.
 #  Should this part also written in async?
-@app.route("/fetch/<filename>")
-def engine_fetch_file(filename):
-    file_dir = './engineDir'
-    try:
-        return send_from_directory(file_dir, filename, as_attachment=True)
-    except FileNotFoundError:
-        return jsonify({"msg": "File not found.."})
+# @app.route("/fetch/<filename>")
+# def engine_fetch_file(filename):
+#     file_dir = './engineDir'
+#     try:
+#         return send_from_directory(file_dir, filename, as_attachment=True)
+#     except FileNotFoundError:
+#         return jsonify({"msg": "File not found.."})

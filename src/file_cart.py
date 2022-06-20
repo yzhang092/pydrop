@@ -11,7 +11,7 @@ class FileCart:
     def __init__(self,filelist):
         self._filelist = filelist
         self._clientDir = './clientDir/'
-        self._base_file_url = 'http://localhost:5000/fetch/'
+        self._base_file_url = 'http://localhost:8080/fetch/'
 
     async def fetch_and_save(self, file, session):
         async with session.get(self._base_file_url + file, timeout=None) as resp:
