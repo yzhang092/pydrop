@@ -7,8 +7,7 @@ from aiohttp import web
 
 
 def to_UTC_string(a: float):
-    return datetime.datetime.utcfromtimestamp(a).strftime(
-        '%a, %d %b %Y %H:%M:%S GMT')
+    return datetime.datetime.utcfromtimestamp(a).strftime('%a, %d %b %Y %H:%M:%S GMT')
 
 
 class FileSender:
@@ -27,8 +26,9 @@ class FileSender:
         return_headers['Content-Length'] = str(file_st_size)
         return_headers['Last-Modified'] = to_UTC_string(file_st_mtime)
         return_headers['Cache-Control'] = ', '.join(['max-age=0', ])
-        return  return_headers
+        return return_headers
 
+    # Set response header and stream write to the other server
     async def send_file(self):
         return_headers = await self.set_header()
         file_path = os.path.join(self._filedir_path, self._filename)

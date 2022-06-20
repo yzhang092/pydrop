@@ -6,6 +6,7 @@ from src.file_sender import FileSender
 routes = web.RouteTableDef()
 
 
+# The only purpose of this server is to send file
 @routes.get('/fetch/{filename}')
 async def hello(request):
     filename = request.match_info['filename']
